@@ -12,7 +12,7 @@ Book.collection = {};
 
 /*Define methods to interact with the storage ("library")*/
 //Store books in Collection
-module.exports.saveEntry = function() {
+Book.saveEntry = function() {
     var collection = "",
         isError = false,
         newEntry = Object.keys(Book.collection).length;
@@ -31,13 +31,13 @@ module.exports.saveEntry = function() {
 };
 
 //Helper used to convert entries to object
-module.exports.convertEntries = function(entry) {
+Book.convertEntries = function(entry) {
     var book = new Book(entry);
     return book;
 };
 
 //Add new book to Book.collection
-module.exports.addNew = function(entry) {
+Book.addNew = function(entry) {
     var book = new Book(entry);
     Book.collection[entry.isbn] = book;
     console.log("New book " + entry.title + " created.");
@@ -45,7 +45,7 @@ module.exports.addNew = function(entry) {
 
 
 //View all books stored in Book.collection
-module.exports.viewAll = function() {
+Book.viewAll = function() {
     var collection = "",
         books = {},
         entry = "",
@@ -76,7 +76,7 @@ module.exports.viewAll = function() {
 
 
 //Update a Book
-module.exports.editBook = function(entry) {
+Book.editBook = function(entry) {
     var book = Book.collection[entry.isbn],
         year = parseInt(entry.year);
 
@@ -93,7 +93,7 @@ module.exports.editBook = function(entry) {
 
 
 //Delete a Book
-module.exports.deleteBook = function(isbn) {
+Book.deleteBook = function(isbn) {
     if(Book.collection[isbn]) {
         delete Book.collection[isbn];
         console.log("Book " + isbn + " has been deleted.");

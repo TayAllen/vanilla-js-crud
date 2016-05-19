@@ -3,42 +3,48 @@
 var Book = require("../model/book");
 
 module.exports.loadCollection = {
-    viewAllBooks: function() {
+    viewAllBooks: function () {
         var bookList = window.document.getElementById("#book-list"),
             entry = "",
             entryList = [],
             listItem = {};
 
-        Book.viewAll();
         entryList = Object.keys(Book.collection);
 
-        for(var i = 0; i < entryList.length; ++i) {
+        for (var i = 0; i < entryList.length; ++i) {
             entry = entryList[i];
-            listItem = document.createDocumentFragment("<span></span>");
-            listItem.textContent = Book.collection[entry].title;
-            listItem.textContent = Book.collection[entry].year;
-            listItem.textContent = Book.collection[entry].isbn;
+            var bookInfo = document.createDocumentFragment("<li></li>");
+            var bookDetails = bookInfo.appendChild(document.createElement("span"));
+            bookDetails.createTextNode = Book.collection[entry].title;
+            bookDetails.createTextNode = Book.collection[entry].year;
+            bookDetails.createTextNode = Book.collection[entry].isbn;
+
+            bookDetails.appendChild(bookList);
         }
 
-        listItem.appendChild(bookList);
+        Book.viewAll();
     }
 };
 
 module.exports.newEntry = {
-    entryHandler: function() {
+    entryListener: function () {
         var saveEntry = window.document.getElementById("#save-entry");
-        saveEntry.addEventListener("click", saveEntry.saveEntryHandler, false);
+        saveEntry.addEventListener("click", this.saveEntryHandler, false);
 
-        window.document.addEventListener("load", function() {
-            var entryForm = window.document.getElementById("#new-book"),
-                newBook = {
-                    isbn: entryForm.isbn.value,
-                    title: entryForm.title.value,
-                    year: entryForm.year.value
-                };
+        /*window.document.addEventListener("beforeunload", function() {
+            Book.saveEntry();
+        });*/
+    },
 
-            Book.saveEntry(newBook);
-            entryForm.reset();
-        });
+    saveEntryHandler: function () {
+        var entryForm = window.document.getElementById("#new-book"),
+            newBook = {
+                isbn: entryForm.isbn.value,
+                title: entryForm.title.value,
+                year: entryForm.year.value
+            };
+
+        Book.saveEntry.call(this, newBook);
+        entryForm.reset();
     }
 };
