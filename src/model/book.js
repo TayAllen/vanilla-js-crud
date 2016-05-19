@@ -7,7 +7,7 @@ function Book(entry) {
     this.year = entry.year;
 }
 
-module.exports.collection = {};
+Book.collection = {};
 
 
 /*Define methods to interact with the storage ("library")*/

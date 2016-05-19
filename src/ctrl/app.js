@@ -1,5 +1,5 @@
 /*jshint esnext: true, browser: true, node: true*/
-var BookCtrl = require("../view/new-book");
+var UICtrl = require("../view/ui-ctrl");
 
 var Library = {
     model: {},
@@ -9,6 +9,5 @@ var Library = {
 
 
 window.document.addEventListener("load", function() {
-    BookCtrl.newEntry.setupUI();
-    BookCtrl.loadCollection.viewAllBooks();
+    UICtrl.loadCollection.viewAllBooks();
 });

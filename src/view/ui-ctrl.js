@@ -25,24 +25,20 @@ module.exports.loadCollection = {
 };
 
 module.exports.newEntry = {
-    setupUI: function() {
+    entryHandler: function() {
         var saveEntry = window.document.getElementById("#save-entry");
         saveEntry.addEventListener("click", saveEntry.saveEntryHandler, false);
 
         window.document.addEventListener("load", function() {
-            Book.addNew();
+            var entryForm = window.document.getElementById("#new-book"),
+                newBook = {
+                    isbn: entryForm.isbn.value,
+                    title: entryForm.title.value,
+                    year: entryForm.year.value
+                };
+
+            Book.saveEntry(newBook);
+            entryForm.reset();
         });
-    },
-
-    saveEntryHandler: function() {
-        var entryForm = window.document.getElementById("#new-book"),
-            newBook = {
-                isbn: entryForm.isbn.value,
-                title: entryForm.title.value,
-                year: entryForm.year.value
-            };
-
-        Book.addNew(newBook);
-        entryForm.reset();
     }
 };
