@@ -7,12 +7,12 @@ function Book(entry) {
     this.year = entry.year;
 }
 
-Book.collection = {};
+module.exports.collection = {};
 
 
 /*Define methods to interact with the storage ("library")*/
 //Store books in Collection
-Book.saveEntry = function() {
+module.exports.saveEntry = function() {
     var collection = "",
         isError = false,
         newEntry = Object.keys(Book.collection).length;
@@ -31,21 +31,21 @@ Book.saveEntry = function() {
 };
 
 //Helper used to convert entries to object
-Book.convertEntries = function(entry) {
+module.exports.convertEntries = function(entry) {
     var book = new Book(entry);
     return book;
 };
 
 //Add new book to Book.collection
-Book.addNew = function(entry) {
+module.exports.addNew = function(entry) {
     var book = new Book(entry);
-    Book.collection[entry.isbn] = book;
+    Book.collection.push(book);
     console.log("New book " + entry.title + " created.");
 };
 
 
 //View all books stored in Book.collection
-Book.viewAll = function() {
+module.exports.viewAll = function() {
     var collection = "",
         books = {},
         entry = "",
@@ -53,8 +53,8 @@ Book.viewAll = function() {
 
 
     try {
-        if(localStorage["books"]) {
-            collection = localStorage["books"];
+        if(localStorage["book"]) {
+            collection = localStorage["book"];
         }
     } catch (error) {
         console.log("Error reading local storage\n" + error);
@@ -76,7 +76,7 @@ Book.viewAll = function() {
 
 
 //Update a Book
-Book.editBook = function(entry) {
+module.exports.editBook = function(entry) {
     var book = Book.collection[entry.isbn],
         year = parseInt(entry.year);
 
@@ -93,7 +93,7 @@ Book.editBook = function(entry) {
 
 
 //Delete a Book
-Book.deleteBook = function(isbn) {
+module.exports.deleteBook = function(isbn) {
     if(Book.collection[isbn]) {
         delete Book.collection[isbn];
         console.log("Book " + isbn + " has been deleted.");

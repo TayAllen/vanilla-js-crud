@@ -4,7 +4,7 @@ var Book = require("../model/book");
 
 module.exports.loadCollection = {
     viewAllBooks: function () {
-        var bookList = window.document.getElementById("#book-list"),
+        var bookList = document.getElementById("#book-list"),
             entry = "",
             entryList = [],
             listItem = {};
@@ -13,13 +13,7 @@ module.exports.loadCollection = {
 
         for (var i = 0; i < entryList.length; ++i) {
             entry = entryList[i];
-            var bookInfo = document.createDocumentFragment("<li></li>");
-            var bookDetails = bookInfo.appendChild(document.createElement("span"));
-            bookDetails.createTextNode = Book.collection[entry].title;
-            bookDetails.createTextNode = Book.collection[entry].year;
-            bookDetails.createTextNode = Book.collection[entry].isbn;
-
-            bookDetails.appendChild(bookList);
+            console.log(entry);
         }
 
         Book.viewAll();
@@ -28,7 +22,7 @@ module.exports.loadCollection = {
 
 module.exports.newEntry = {
     entryListener: function () {
-        var saveEntry = window.document.getElementById("#save-entry");
+        var saveEntry = document.getElementById("#save-entry");
         saveEntry.addEventListener("click", this.saveEntryHandler, false);
 
         /*window.document.addEventListener("beforeunload", function() {
@@ -37,14 +31,14 @@ module.exports.newEntry = {
     },
 
     saveEntryHandler: function () {
-        var entryForm = window.document.getElementById("#new-book"),
+        var entryForm = document.getElementById("#new-book"),
             newBook = {
                 isbn: entryForm.isbn.value,
                 title: entryForm.title.value,
                 year: entryForm.year.value
             };
 
-        Book.saveEntry.call(this, newBook);
+        Book.saveEntry(newBook);
         entryForm.reset();
     }
 };
